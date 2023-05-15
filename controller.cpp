@@ -5,8 +5,9 @@
 #include<conio.h>
 
 Controller* Controller::controller = new Controller;
-
-std::vector<Character*> Controller::troop(3, nullptr);
+int Controller::current_choice = -1;
+std::vector<Character*>::size_type Controller::troop_size = 3;
+std::vector<Character*> Controller::troop(Controller::troop_size, nullptr);
 
 Controller::Controller(){
     std::cout << "Game start!" << std::endl;

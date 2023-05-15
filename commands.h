@@ -10,7 +10,6 @@
 #include"command.h"
 
 void loop_control(std::vector<Command*> &, int (*)(char)); //* 用于具槽命令类的循环控制
-void loop_control(std::vector<Command*> &, int (*)(char), int);
 
 class Main_Command : public Command{
     std::vector<Command*> slots;
@@ -26,19 +25,27 @@ class Character_Command : public Command{
 public:
     Character_Command();
     void execute();
-    int choose_position();
 };
 
 int trans_character(char); //* Character_Command的转换函数
 
+class Character_Choose_Command : public Command{
+public: 
+    void execute();
+};
+
 class Create_Command : public Command{
 public:
-    void execute(int);
+    void execute();
 };
 
 class Attack_Command : public Command{
 public:
-    void execute(int);
+    void execute();
+};
+class Clear_Command : public Command{
+public:
+    void execute();
 };
 
 #endif

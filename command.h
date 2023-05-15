@@ -4,6 +4,5 @@
 class Command{
 public:
     virtual void execute(){}
-    virtual void execute(int){}
 };
 #endif
