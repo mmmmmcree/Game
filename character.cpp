@@ -1,6 +1,7 @@
 #include"character.h"
 
-Character::Character(std::string _name = "nobody"): name(_name), attack_power(0), weapon(nullptr), hit_point(100){}
+Character::Character(const std::string& _name, const std::string& img = NULL, int ap = 100, int hp = 100, Weapon* _weapon = nullptr):
+    name(_name), image(img), attack_power(ap), hit_point(hp), weapon(_weapon){}
 
 Character::Character(): Character("nobody"){}
 

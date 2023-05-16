@@ -5,10 +5,9 @@
 #include<string>
 class Character{
 public:
-    Character(std::string);
+    Character(const std::string&, const std::string&, int, int, Weapon*); //* name, image, attack_point, hit_point, weapon
     Character();
     ~Character();
-    virtual void init(){}; //* 角色初始化，为虚函数，强制要求每个子类设置自己的初始化内容，包括初始生命值、武器等
     void describe(); //todo 描述角色信息
     int get_ap();  //* 获得攻击力数值
     void attack(); //* 攻击空气    (角色的攻击行为通过调用武器来完成)
@@ -17,7 +16,7 @@ public:
     void set_ap(int); //* 人物攻击力设置
     void set_weapon(Weapon*); //* 武器切换
     void change_hp(int); //* 血量更改
-    void print_image();
+    void print_image(); //todo 改成get_image()
 protected:
     void name_wrapper(const std::string&);  //* 角色名字装饰，加上兵种信息
     void set_image(const std::string&); //* 设置头像

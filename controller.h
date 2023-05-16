@@ -9,7 +9,6 @@ public:
     void control();
     static Controller* controller;
     static int current_choice;
-    static std::vector<Character*>::size_type troop_size;
     static std::vector<Character*> troop;
 };
 #endif

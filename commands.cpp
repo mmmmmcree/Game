@@ -4,12 +4,18 @@
 #include<iostream>
 #include<conio.h>
 
-void loop_control(std::vector<Command*> &slots, int (*trans)(char)){
-    int i;
-    for(char c; std::cout << "command: ", c = _getche(), std::cout << std::endl, c != '~';){
-        i = trans(c);
-        if(i < slots.size() && i >= 0){slots[i]->execute();}
-        else{std::cout << "无效命令" << std::endl;}
+#define sodier_under_control Controller::troop[Controller::current_choice]
+
+bool check(bool t, const std::string& msg = "无效命令"){
+    if(t){std::cout << msg << std::endl;}
+    return t;
+}
+
+void loop_control(std::vector<Command*> &slots, void (*trans)(int&)){
+    for(int i; std::cout << "command: ", i = _getche(), std::cout << std::endl, i != '~';){
+        trans(i);
+        if(check(i < 0 || i >= slots.size())){continue;}
+        else{slots[i]->execute();}
     }
 }
 
@@ -22,73 +28,72 @@ void Main_Command::execute(){
 }
 
 Character_Command::Character_Command():
-    slots{new Create_Command, new Attack_Command, new Character_Choose_Command, }{}
+    slots{new Create_Command, new Attack_Command, new Character_Choose_Command, new Delete_Command, }{}
 
 void Character_Command::execute(){
     std::cout << "MODE: Character_Command" << std::endl;
     slots[2]->execute(); //* 先进入角色选择模式
     loop_control(slots, trans_character);
-    Controller::current_choice = -1;
     std::cout << "Mode: Main_Command" << std::endl;
 }
 
 void Character_Choose_Command::execute(){
-    std::cout << "选择操纵位置(1~" << Controller::troop_size << "): ";
-    int &n = Controller::current_choice;
-    n = _getche() - '0' - 1;
-    for(n; n < 0 || n >= Controller::troop_size; n = _getche() - '0' - 1){
-        std::cout << std::endl << "无法操纵该位置，请重新选择: ";
+    for(int &i = Controller::current_choice;
+        std::cout << "选择操纵位置(1~" << Controller::troop.size() << "): ", i = _getche() - '0' - 1, std::cout << std::endl, 
+        check(i < 0 || i >= Controller::troop.size(), "无法操纵该位置，请重新选择"););
+    if(check(!sodier_under_control, "当前位置没有士兵，如果想使用，需要创建士兵")){
+    }else{
+        std::cout << sodier_under_control->get_name() << " is under control..." << std::endl;
+        sodier_under_control->print_image();
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
-    if(!Controller::troop[Controller::current_choice]){
-        std::cout << "当前位置没有士兵，如果想使用，需要创建士兵" << std::endl;
-    }
+}
+
+void Delete_Command::execute(){
+    if(check(!sodier_under_control, "当前位置还没有士兵，无法删除士兵")){return;}
+    delete sodier_under_control;
+    sodier_under_control = nullptr;
 }
 
 void Create_Command::execute(){
-    if(Controller::troop[Controller::current_choice]){
-        std::cout << "当前位置已有士兵，无法创建新的士兵" << std::endl;
-        return;
-    }
+    if(check(sodier_under_control, "当前位置已有士兵，无法创建新的士兵")){return;}
     std::string name;
     std::cout << "输入士兵[" << Controller::current_choice + 1 << "]的名字: ";
     std::getline(std::cin, name);
-    Controller::troop[Controller::current_choice] = new Knight(name);
+    sodier_under_control = new Knight(name);
 }
 
 void Attack_Command::execute(){
-    if(Controller::troop[Controller::current_choice]){
-        Controller::troop[Controller::current_choice]->attack();
-    }else{
-        std::cout << "无效命令" << std::endl;
-    }
+    if(check(!sodier_under_control)){return;}
+    sodier_under_control->attack();
 }
 
 void Clear_Command::execute(){
     system("cls");
 }
 
-
-int trans_main(char c){
-    switch (c){
+void trans_main(int& ch){
+    switch (ch){
     case 'p':
-        return 0;
+        ch = 0; break;
     case 'c':
-        return 1;
+        ch = 1; break;
     default:
-        return -1;
+        ch = -1; break;
     }    
 }
 
-int trans_character(char c){
-    switch (c){
+void trans_character(int& ch){
+    switch (ch){
     case 'c':
-        return 0;
+        ch = 0; break;
     case 'j':
-        return 1;
+        ch = 1; break;
     case 'b':
-        return 2;
+        ch = 2; break;
+    case 'd':
+        ch = 3; break;
     default:
-        return -1;
+        ch = -1; break;
     }
 }

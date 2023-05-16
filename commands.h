@@ -9,7 +9,9 @@
 #include<vector>
 #include"command.h"
 
-void loop_control(std::vector<Command*> &, int (*)(char)); //* 用于具槽命令类的循环控制
+bool check(bool, const std::string&); //* 逻辑判断的装饰器，如果传入true，则输出一段字符串
+
+void loop_control(std::vector<Command*> &, void (*)(int&)); //* 用于具槽命令类的循环控制
 
 class Main_Command : public Command{
     std::vector<Command*> slots;
@@ -18,7 +20,7 @@ public:
     void execute();
 };
 
-int trans_main(char);
+void trans_main(int&);
 
 class Character_Command : public Command{
     std::vector<Command*> slots;
@@ -27,24 +29,25 @@ public:
     void execute();
 };
 
-int trans_character(char); //* Character_Command的转换函数
+void trans_character(int&); //* Character_Command的转换函数
 
-class Character_Choose_Command : public Command{
-public: 
+struct Character_Choose_Command : public Command{
     void execute();
 };
 
-class Create_Command : public Command{
-public:
+struct Delete_Command : public Command{
     void execute();
 };
 
-class Attack_Command : public Command{
-public:
+struct Create_Command : public Command{
     void execute();
 };
-class Clear_Command : public Command{
-public:
+
+struct Attack_Command : public Command{
+    void execute();
+};
+
+struct Clear_Command : public Command{
     void execute();
 };
 
