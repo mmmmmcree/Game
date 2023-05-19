@@ -11,7 +11,6 @@ public:
             std::cout << "\b\b" << "       ⚫" + i;
             Sleep(10);
         }
-        std::cout << std::endl;
     }
     void init(){
         set_ap(100);

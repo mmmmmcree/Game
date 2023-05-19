@@ -3,6 +3,7 @@
 
 void Weapon::attack(Character& enemy, int ap){
     attack(ap);
+    std::cout << enemy.get_image() << std::endl;
     enemy.change_hp(-ap);
 }
 

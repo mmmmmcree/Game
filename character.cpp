@@ -16,11 +16,12 @@ void Character::describe(){
 }
 
 void Character::attack(){
-    print_image();
+    std::cout << get_image();
     weapon->attack(get_ap());
 }
 
 void Character::attack(Character&enemy){
+    std::cout << get_image();
     weapon->attack(enemy, get_ap());
 }
 
@@ -28,8 +29,16 @@ std::string Character::get_name(){
     return name;
 }
 
+std::string Character::get_image(){
+    return image;
+}
+
 int Character::get_ap(){
-    return weapon->add_ap() + this->attack_power;
+    return weapon->add_ap() + attack_power;
+}
+
+int Character::get_hp(){
+    return hit_point;
 }
 
 void Character::set_ap(int n){
@@ -52,8 +61,4 @@ void Character::name_wrapper(const std::string &type){
 
 void Character::set_image(const std::string& img){
     image = img;
-}
-
-void Character::print_image(){
-    std::cout << image;
 }

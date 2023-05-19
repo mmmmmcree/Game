@@ -10,13 +10,14 @@ public:
     ~Character();
     void describe(); //todo 描述角色信息
     int get_ap();  //* 获得攻击力数值
+    int get_hp(); //* 获得生命值信息
     void attack(); //* 攻击空气    (角色的攻击行为通过调用武器来完成)
     std::string get_name(); //* 获得角色名字
+    std::string get_image(); //* 获得角色头像
     void attack(Character&); //* 攻击另一个角色
     void set_ap(int); //* 人物攻击力设置
     void set_weapon(Weapon*); //* 武器切换
     void change_hp(int); //* 血量更改
-    void print_image(); //todo 改成get_image()
 protected:
     void name_wrapper(const std::string&);  //* 角色名字装饰，加上兵种信息
     void set_image(const std::string&); //* 设置头像

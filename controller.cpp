@@ -10,6 +10,8 @@ int Controller::current_choice = -1;
 
 std::vector<Character*> Controller::troop(3, nullptr);
 
+std::vector<Character*> Controller::enemy{new Knight("MotherFucker", "ᕙ(⇀‸↼‵‵)ᕗ", 20, 1000, nullptr)};
+
 Controller::Controller(){
     std::cout << "Game start!" << std::endl;
 }

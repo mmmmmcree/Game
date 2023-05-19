@@ -4,12 +4,11 @@
 #include"gun.h"
 class Knight: public Character{
 public:
-    Knight(const std::string& _name):
-        Character::Character(_name, "ξ(✿ ❛‿❛)ξ" , 20 , 100 , new Gun){
+    Knight(const std::string& _name, const std::string& img = "ξ(✿ ❛‿❛)ξ", int ap = 20, int hp = 100, Weapon* _weapon = new Gun):
+        Character::Character(_name, img , ap , hp , _weapon){
             name_wrapper("knight");
             std::cout << name << " is created..." << std::endl;
-            print_image();
-            std::cout << std::endl;
+            std::cout << get_image() << std::endl;
         }
     Knight(): Knight("nobody"){}
 };

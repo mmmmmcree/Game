@@ -6,7 +6,10 @@ using namespace std;
 
 int main(){
     //? system("start README.md");
+    HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE); //获取标准输出句柄
+	SetConsoleTextAttribute(hOutput,FOREGROUND_GREEN); //设置文本颜色蓝色,背景色绿色,有下划线
     Controller::controller->control();
+    system("pause");
 }
 
 /*

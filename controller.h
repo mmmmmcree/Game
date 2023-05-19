@@ -10,5 +10,6 @@ public:
     static Controller* controller;
     static int current_choice;
     static std::vector<Character*> troop;
+    static std::vector<Character*> enemy;
 };
 #endif
